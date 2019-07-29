@@ -1,0 +1,4 @@
+name: Core
+version: 1.0
+dependencies: []
+main: de.langomatisch.skyblock.core.CoreModule
