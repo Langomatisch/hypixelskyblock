@@ -17,8 +17,8 @@ This "plugin" is divided into modules in IntelliJ IDEA. Those Modules works inde
 Modules
 -------
 
-###core
-###auctionhouse
-###coins
-###minion
-###quest
+### core
+### auctionhouse
+### coins
+### minion
+### quest
