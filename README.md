@@ -3,7 +3,8 @@ Hypixel-Skyblock
 
 My own interpretation of the Skyblock Minigame from Hypixel.net.
 
-[Modules](#Modules)
+[![Documentation Status](https://readthedocs.org/projects/hypixelskyblock/badge/?version=latest)](https://hypixelskyblock.readthedocs.io/en/latest/?badge=latest)
+
 
 Expectation
 -----------
