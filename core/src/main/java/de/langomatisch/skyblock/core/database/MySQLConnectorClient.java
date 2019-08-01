@@ -14,9 +14,6 @@ public class MySQLConnectorClient {
     private String username;
     private String password;
     private Connection mySQLInstance = null;
-    private String configurationDatabase = "";
-    private String configurationNickAPI = "";
-    private String configurationCoinsPointsAPI = "";
     
     public MySQLConnectorClient(ConfigurationSection section ) {
         this.section = section;
@@ -26,9 +23,6 @@ public class MySQLConnectorClient {
         this.database = section.getString( "database" );
         this.username = section.getString( "username" );
         this.password = section.getString( "password" );
-        this.configurationDatabase = section.getString( "databaseConfiguration" );
-        this.configurationCoinsPointsAPI = section.getString( "databaseCoinsPointsAPI" );
-        this.configurationNickAPI = section.getString( "databaseNickAPI" );
     }
     
     public Connection getMySQLInstance() {
@@ -53,19 +47,8 @@ public class MySQLConnectorClient {
         }
     }
     
-    public String getConfigurationDatabase() {
-        return this.configurationDatabase;
-    }
-    
     public String getDatabase() {
         return this.database;
     }
-    
-    public String getConfigurationNickAPI() {
-        return this.configurationNickAPI;
-    }
-    
-    public String getConfigurationCoinsPointsAPI() {
-        return this.configurationCoinsPointsAPI;
-    }
+
 }

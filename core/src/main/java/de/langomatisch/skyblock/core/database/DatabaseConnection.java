@@ -11,9 +11,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.stream.IntStream;
 
-/**
- * @author Yxns
- */
 public class DatabaseConnection {
     
     @Getter
@@ -73,8 +70,6 @@ public class DatabaseConnection {
      * @see PreparedStatement
      */
     public ResultSet prepareStatement( String sql, Object... parameters ) {
-        sql = replaceGlobalVariables( sql );
-        
         try {
             PreparedStatement statement = this.connection.prepareStatement( sql );
             
@@ -104,8 +99,6 @@ public class DatabaseConnection {
      * @see PreparedStatement
      */
     public void updateStatement( String sql, Object... parameters ) {
-        sql = replaceGlobalVariables( sql );
-        
         try {
             PreparedStatement statement = this.connection.prepareStatement( sql );
             
@@ -138,8 +131,5 @@ public class DatabaseConnection {
     public void runAsynchronously( Runnable runnable ) {
         Bukkit.getScheduler().runTaskAsynchronously( this.plugin, runnable );
     }
-    
-    private String replaceGlobalVariables( String s ) {
-        return s.replaceAll( "_database", this.database ).replaceAll( "_table", this.table );
-    }
+
 }

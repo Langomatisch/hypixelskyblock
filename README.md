@@ -18,7 +18,22 @@ Modules
 -------
 
 ### core
+``
+Some sample text
+``
 ### auctionhouse
+``
+Some sample text
+``
 ### coins
+``
+some sample text
+``
 ### minion
+``
+some sample text
+``
 ### quest
+``
+some sample text
+``
