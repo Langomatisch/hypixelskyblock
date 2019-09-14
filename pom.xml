@@ -22,6 +22,8 @@
         <module>auctionhouse</module>
         <module>minion</module>
         <module>hypixel-rank-sync</module>
+        <module>enchantments</module>
+        <module>lobby</module>
     </modules>
 
     <dependencies>

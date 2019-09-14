@@ -1,0 +1,4 @@
+name: Minions
+version: 1.0
+dependencies: []
+main: de.langomatisch.skyblock.minion.MinionModule

@@ -6,6 +6,7 @@ import de.langomatisch.skyblock.coins.CoinsModule;
 import de.mcgregordev.kiara.core.command.ModuleCommand;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import javax.annotation.Nullable;
 import java.util.UUID;
@@ -29,13 +30,21 @@ public class SetCoinsCommand extends Command {
         Futures.addCallback(module.getCoinsProvider().setCoins(uuid, amount), new FutureCallback<Void>() {
             @Override
             public void onSuccess(@Nullable Void aVoid) {
-                module.getMessageStorage().getMessage("command.setcoins.success");
+                String locale = "en-EN";
+                if (commandSender instanceof Player) {
+                    locale = ((Player) commandSender).getLocale();
+                }
+                commandSender.sendMessage(module.getLanguageHandler().getMessage(locale, "command.setcoins.success"));
             }
 
             @Override
             public void onFailure(Throwable throwable) {
                 throwable.printStackTrace();
-                commandSender.sendMessage("§cEin Fehler ist aufgetreten: " + throwable.getMessage());
+                String locale = "en-EN";
+                if (commandSender instanceof Player) {
+                    locale = ((Player) commandSender).getLocale();
+                }
+                commandSender.sendMessage(module.getLanguageHandler().getMessage(locale, "error"));
             }
         });
         return false;

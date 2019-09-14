@@ -5,8 +5,7 @@ import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import de.langomatisch.skyblock.coins.CoinsModule;
 import de.langomatisch.skyblock.coins.event.PlayerCoinsChangeEvent;
-import de.langomatisch.skyblock.core.database.DatabaseConnection;
-import de.langomatisch.skyblock.core.database.MySQLConnectorClient;
+import de.langomatisch.skyblock.core.database.Database;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 
@@ -20,15 +19,12 @@ import java.util.concurrent.Executors;
 public class CoinsProvider {
 
     private CoinsModule coinsModule;
-    private MySQLConnectorClient client;
-    private DatabaseConnection connection;
+    private Database database;
     private ExecutorService executorService = Executors.newCachedThreadPool();
     private ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
 
-    public CoinsProvider(CoinsModule module) {
-        this.coinsModule = module;
-        this.client = new MySQLConnectorClient(coinsModule.getConfig().getConfigurationSection("mysql"));
-        this.connection = new DatabaseConnection(coinsModule.getCorePlugin(), client.getMySQLInstance());
+    public CoinsProvider(Database database) {
+        this.database = database;
         //TODO: Table creation
     }
 
@@ -40,7 +36,7 @@ public class CoinsProvider {
      */
     public ListenableFuture<Integer> getCoins(final UUID uuid) {
         return service.submit(() -> {
-            ResultSet resultSet = connection.prepareStatement("SELECT coins FROM hypixel.coins WHERE uuid = ?", uuid.toString());
+            ResultSet resultSet = (ResultSet) database.query("SELECT coins FROM hypixel.coins WHERE uuid = ?", uuid.toString());
             if (!resultSet.next()) return 0;
             return resultSet.getInt("coins");
         });
@@ -60,8 +56,8 @@ public class CoinsProvider {
             PlayerCoinsChangeEvent event = new PlayerCoinsChangeEvent(uuid, coinsNow, coinsNow + amount);
             Bukkit.getPluginManager().callEvent(event);
             if (!event.isCancelled()) {
-                connection.updateStatement("INSERT INTO hypixel.coins(uuid, coins) VALUES (?, ?) " +
-                        "ON DUPLICATE KEY UPDATE coins = ?", uuid.toString(), amount, amount);
+                database.update("INSERT INTO hypixel.coins(uuid, coins) VALUES (?, ?) " +
+                        "ON DUPLICATE KEY UPDATE coins = ?", uuid.toString(), String.valueOf(amount), String.valueOf(amount));
             }
             return null;
         });

@@ -1,0 +1,7 @@
+---
+command:
+  error: '&cEin Fehler ist aufgetreten'
+  coins:
+    success: '&aDein aktueller Kontostand: %coins%'
+  setcoins:
+    success: '&aDu hast die Münzen von %name% auf %coins% gesetzt'

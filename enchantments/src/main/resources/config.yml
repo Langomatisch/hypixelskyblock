@@ -1,0 +1,4 @@
+enchantments:
+  telekenisis:
+    enable: true
+    maxLvl: 1
