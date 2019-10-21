@@ -3,23 +3,27 @@ package de.langomatisch.skyblock.coins;
 import de.langomatisch.skyblock.coins.command.CoinsCommand;
 import de.langomatisch.skyblock.coins.command.SetCoinsCommand;
 import de.langomatisch.skyblock.coins.provider.CoinsProvider;
-import de.langomatisch.skyblock.core.CoreModule;
-import de.langomatisch.skyblock.core.database.MySQLDatabase;
-import de.mcgregordev.kiara.core.module.Module;
+import de.langomatisch.skyblock.core.CorePlugin;
+import de.langomatisch.skyblock.core.database.SessionFactoryProvider;
+import de.langomatisch.skyblock.core.module.Module;
 import lombok.Getter;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 @Getter
 public class CoinsModule extends Module {
 
-    private CoreModule coreModule;
+    private CorePlugin corePlugin;
     private CoinsProvider coinsProvider;
+    private SessionFactory sessionFactory;
 
     @Override
     public void onEnable() {
-        this.coreModule = CoreModule.getInstance();
+        this.corePlugin = CorePlugin.getInstance();
         registerCommand(new CoinsCommand(this));
         registerCommand(new SetCoinsCommand(this));
-        coinsProvider = new CoinsProvider(new MySQLDatabase("localhost", "hypixel", "root", "", 3306));
+        sessionFactory = new SessionFactoryProvider("jdbc:mysql://localhost:3306/hypixel","root","", "de.langomatisch.skyblock.coins.entity").get();
+        coinsProvider = new CoinsProvider(this);
     }
 
     @Override

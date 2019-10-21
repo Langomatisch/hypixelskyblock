@@ -1,9 +1,10 @@
+[![Documentation Status](https://readthedocs.org/projects/hypixelskyblock/badge/?version=latest)](https://hypixelskyblock.readthedocs.io/en/latest/?badge=latest)
+
 Hypixel-Skyblock
 ================
 
 My own interpretation of the Skyblock Minigame from Hypixel.net.
 
-[![Documentation Status](https://readthedocs.org/projects/hypixelskyblock/badge/?version=latest)](https://hypixelskyblock.readthedocs.io/en/latest/?badge=latest)
 
 
 Expectation
@@ -20,7 +21,7 @@ Modules
 
 ### core
 ``
-Some sample text
+Just the groundstone of this system.
 ``
 ### auctionhouse
 ``

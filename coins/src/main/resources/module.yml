@@ -1,4 +1,4 @@
 name: Coins
 version: 1.0
-dependencies: []
+dependencies: [Hypixel-Core]
 main: de.langomatisch.skyblock.coins.CoinsModule

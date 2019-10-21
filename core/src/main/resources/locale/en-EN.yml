@@ -1,0 +1,6 @@
+command:
+  error: '&cAn error occurred'
+  coins:
+    success: '&aYour current balance: %coins%'
+  setcoins:
+    success: '&aYou set the coins from %name% to %coins%'

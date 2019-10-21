@@ -1,0 +1,3 @@
+name: Hypixel-Skyblock
+version: 1.0.0
+main: de.langomatisch.skyblock.core.CorePlugin
