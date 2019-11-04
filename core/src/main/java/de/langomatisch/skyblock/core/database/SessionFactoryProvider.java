@@ -1,7 +1,6 @@
 package de.langomatisch.skyblock.core.database;
 
 import com.google.common.collect.Maps;
-import com.google.common.reflect.ClassPath;
 import de.langomatisch.skyblock.core.CorePlugin;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
@@ -10,10 +9,7 @@ import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Environment;
 
-import javax.persistence.Entity;
-import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 public class SessionFactoryProvider {
     private static StandardServiceRegistry registry;
@@ -21,13 +17,13 @@ public class SessionFactoryProvider {
     private final String databaseUrl;
     private final String databaseUser;
     private final String databasePassword;
-    private final String entityPath;
+    private final Class<?>[] classes;
 
-    public SessionFactoryProvider(String databaseUrl, String databaseUser, String databasePassword, String entityPath) {
+    public SessionFactoryProvider(String databaseUrl, String databaseUser, String databasePassword, Class<?>... classes) {
         this.databaseUrl = databaseUrl;
         this.databaseUser = databaseUser;
         this.databasePassword = databasePassword;
-        this.entityPath = entityPath;
+        this.classes = classes;
     }
 
     public static void shutdown() {
@@ -39,15 +35,6 @@ public class SessionFactoryProvider {
         Thread.currentThread().setContextClassLoader(CorePlugin.class.getClassLoader());
         System.out.println("load hibernate... with user " + databaseUser + "@" + databaseUrl);
         try {
-            List<Class<?>> entities = ClassPath.from(this.getClass().getClassLoader())
-                    .getTopLevelClasses(entityPath)
-                    .stream()
-                    .map(ClassPath.ClassInfo::load)
-                    .filter(clazz -> {
-                        System.out.println(clazz.getName());
-                        return clazz.getAnnotation(Entity.class) != null;
-                    })
-                    .collect(Collectors.toList());
 
             StandardServiceRegistryBuilder registryBuilder =
                     new StandardServiceRegistryBuilder();
@@ -63,9 +50,9 @@ public class SessionFactoryProvider {
             settings.put("hibernate.hikari.connectionTimeout", "20000");
             settings.put("hibernate.hikari.minimumIdle", "10");
             settings.put("hibernate.hikari.idleTimeout", "300000");
-            //settings.put(Environment.USE_SECOND_LEVEL_CACHE, "true");
-            //settings.put(Environment.USE_QUERY_CACHE, "true");
-            //settings.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory");
+            settings.put(Environment.USE_SECOND_LEVEL_CACHE, "true");
+            settings.put(Environment.USE_QUERY_CACHE, "true");
+            settings.put(Environment.CACHE_REGION_FACTORY, "org.hibernate.cache.ehcache.SingletonEhCacheRegionFactory");
             settings.put(Environment.ENABLE_LAZY_LOAD_NO_TRANS, "true");
             settings.put(Environment.ORDER_INSERTS, true);
             settings.put(Environment.ORDER_UPDATES, true);
@@ -75,7 +62,7 @@ public class SessionFactoryProvider {
             registry = registryBuilder.build();
             MetadataSources sources = new MetadataSources(SessionFactoryProvider.registry);
 
-            for (Class<?> entity : entities) {
+            for (Class<?> entity : classes) {
                 System.out.println("found entity: " + entity.getName());
                 sources.addAnnotatedClass(entity);
             }

@@ -1,11 +1,9 @@
-package de.langomatisch.skyblock.core.locale;
+package de.langomatisch.skyblock.language;
 
 import org.bukkit.ChatColor;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.Yaml;
 
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,6 +16,7 @@ public class Locale {
         Map<String, Object> values = yamlConfiguration.getValues(true);
         values.forEach((s, o) -> {
             if (o instanceof String) {
+                System.out.println("[Language] loaded " + s + ": " + o);
                 messageMap.put(s, (String) o);
             }
         });

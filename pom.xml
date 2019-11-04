@@ -24,6 +24,7 @@
         <module>hypixel-rank-sync</module>
         <module>enchantments</module>
         <module>lobby</module>
+        <module>language</module>
     </modules>
 
     <dependencies>

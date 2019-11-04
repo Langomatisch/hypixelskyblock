@@ -1,11 +1,9 @@
 package de.langomatisch.skyblock.coins.event;
 
 import lombok.Getter;
-import org.bukkit.entity.Player;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
-import org.bukkit.event.player.PlayerEvent;
 
 import java.util.UUID;
 
@@ -15,10 +13,10 @@ public class PlayerCoinsChangeEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     private UUID uuid;
-    private int coinsNow, coinsBefore;
+    private double coinsNow, coinsBefore;
     private boolean cancelled;
 
-    public PlayerCoinsChangeEvent(UUID uuid, int coinsNow, int coinsBefore) {
+    public PlayerCoinsChangeEvent(UUID uuid, double coinsNow, double coinsBefore) {
         this.uuid = uuid;
         this.cancelled = false;
         this.coinsBefore = coinsBefore;

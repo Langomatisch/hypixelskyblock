@@ -1,6 +1,6 @@
 command:
   error: '&cAn error occurred'
   coins:
-    success: '&aYour current balance: %coins%'
+    success: '&aYour current balance: %.3f'
   setcoins:
-    success: '&aYou set the coins from %name% to %coins%'
+    success: '&aYou set the coins from %s to %.3f'

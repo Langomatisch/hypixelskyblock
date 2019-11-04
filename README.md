@@ -23,6 +23,12 @@ Modules
 ``
 Just the groundstone of this system.
 ``
+
+### coins
+``
+the coinsystem wich everything here uses. will be vault compatible at some time.. maybe
+``
+
 ### auctionhouse
 ``
 Some sample text

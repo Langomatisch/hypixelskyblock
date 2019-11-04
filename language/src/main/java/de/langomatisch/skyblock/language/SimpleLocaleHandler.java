@@ -1,11 +1,8 @@
-package de.langomatisch.skyblock.core.locale;
+package de.langomatisch.skyblock.language;
 
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import de.langomatisch.skyblock.core.language.LanguageHandler;
-import de.langomatisch.skyblock.core.language.SimpleLanguageHandler;
-import de.langomatisch.skyblock.core.module.Module;
 import lombok.Getter;
 import org.bukkit.entity.Player;
 

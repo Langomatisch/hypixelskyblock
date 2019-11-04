@@ -1,4 +1,0 @@
-name: Coins
-version: 1.0
-dependencies: []
-main: de.langomatisch.skyblock.ranksync.RankSyncModule

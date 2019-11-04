@@ -1,10 +1,6 @@
-package de.langomatisch.skyblock.core.language;
+package de.langomatisch.skyblock.language;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import de.langomatisch.skyblock.core.locale.Locale;
-import de.langomatisch.skyblock.core.locale.LocaleHandler;
-import de.langomatisch.skyblock.core.locale.SimpleLocaleHandler;
-import de.langomatisch.skyblock.core.module.Module;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
@@ -22,10 +18,8 @@ public class SimpleLanguageHandler implements LanguageHandler {
     private Locale defaultLocale;
     private Map<String, Locale> localeMap = new HashMap<>();
 
-    public SimpleLanguageHandler(Module module) {
-        System.out.println("hi");
+    public SimpleLanguageHandler(File dataFolder) {
         localeHandler = new SimpleLocaleHandler(this);
-        File dataFolder = module.getDataFolder();
         System.out.println(dataFolder.toString());
         File localeFolder = new File(dataFolder, "locales/");
         if(!localeFolder.exists()) {

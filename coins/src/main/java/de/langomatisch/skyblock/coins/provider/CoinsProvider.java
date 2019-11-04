@@ -4,12 +4,12 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
 import de.langomatisch.skyblock.coins.CoinsModule;
-import de.langomatisch.skyblock.coins.entity.CoinsPlayer;
-import de.langomatisch.skyblock.core.CorePlugin;
+import de.langomatisch.skyblock.coins.entity.CoinUser;
+import de.langomatisch.skyblock.coins.event.PlayerCoinsChangeEvent;
+import de.langomatisch.skyblock.coins.repository.CoinUserRepository;
 import lombok.Getter;
-import org.hibernate.Session;
+import org.bukkit.Bukkit;
 
-import javax.persistence.EntityManager;
 import java.util.Date;
 import java.util.UUID;
 import java.util.concurrent.ExecutorService;
@@ -21,9 +21,11 @@ public class CoinsProvider {
     private CoinsModule coinsModule;
     private ExecutorService executorService = Executors.newCachedThreadPool();
     private ListeningExecutorService service = MoreExecutors.listeningDecorator(Executors.newFixedThreadPool(10));
+    private CoinUserRepository repository;
 
-    public CoinsProvider(CoinsModule coinsModule) {
+    public CoinsProvider(CoinsModule coinsModule, CoinUserRepository repository) {
         this.coinsModule = coinsModule;
+        this.repository = repository;
     }
 
     /***
@@ -34,11 +36,14 @@ public class CoinsProvider {
      */
     public ListenableFuture<Double> getCoins(final UUID uuid) {
         return service.submit(() -> {
-            System.out.println("a");
-            CoinsPlayer coinsPlayer = coinsModule.getSessionFactory().openSession().get(CoinsPlayer.class, uuid.toString());
-            System.out.println("b");
-            if(coinsPlayer == null) return 0d;
-            return coinsPlayer.getCoins();
+            CoinUser coinUser = repository.findById(uuid).get();
+            if (coinUser == null) {
+                coinUser = new CoinUser();
+                coinUser.setUuid(uuid);
+                coinUser.setCoins(0);
+                repository.create(coinUser);
+            }
+            return coinUser.getCoins();
         });
     }
 
@@ -52,10 +57,12 @@ public class CoinsProvider {
      */
     public ListenableFuture<Void> setCoins(UUID uuid, double amount) {
         return service.submit(() -> {
-            Session session = coinsModule.getSessionFactory().openSession();
-            CoinsPlayer coinsPlayer = session.get(CoinsPlayer.class, uuid.toString());
+            CoinUser coinsPlayer = repository.findById(uuid).get();
+            PlayerCoinsChangeEvent event = new PlayerCoinsChangeEvent(uuid, coinsPlayer.getCoins(), amount);
+            Bukkit.getPluginManager().callEvent(event);
+            if (event.isCancelled()) return null;
             coinsPlayer.setCoins(amount);
-            session.saveOrUpdate(coinsPlayer);
+            repository.update(coinsPlayer);
             return null;
         });
     }

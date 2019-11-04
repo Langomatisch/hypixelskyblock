@@ -1,8 +1,8 @@
 package de.langomatisch.skyblock.core.module;
 
 import de.langomatisch.skyblock.core.CorePlugin;
-import de.langomatisch.skyblock.core.language.LanguageHandler;
-import de.langomatisch.skyblock.core.language.SimpleLanguageHandler;
+import de.langomatisch.skyblock.language.LanguageHandler;
+import de.langomatisch.skyblock.language.SimpleLanguageHandler;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
@@ -60,12 +60,15 @@ public abstract class Module {
 
         configFile = new File(dataFolder, "config.yml");
         try {
-            configFile.createNewFile();
+            if(configFile.createNewFile()) {
+                getLogger().info("config created");
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }
         config = YamlConfiguration.loadConfiguration(configFile);
-        this.languageHandler = new SimpleLanguageHandler(this);
+        System.out.println(dataFolder.toString());
+        this.languageHandler = new SimpleLanguageHandler(this.getDataFolder());
     }
 
     /**

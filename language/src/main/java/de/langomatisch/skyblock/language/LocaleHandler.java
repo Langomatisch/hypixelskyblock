@@ -1,7 +1,6 @@
-package de.langomatisch.skyblock.core.locale;
+package de.langomatisch.skyblock.language;
 
 import com.google.common.util.concurrent.ListenableFuture;
-import de.langomatisch.skyblock.core.language.LanguageHandler;
 import org.bukkit.entity.Player;
 
 import java.io.File;

@@ -1,7 +1,6 @@
----
 command:
   error: '&cEin Fehler ist aufgetreten'
   coins:
-    success: '&aDein aktueller Kontostand: %coins%'
+    success: '&aDein aktueller Kontostand: %.3f'
   setcoins:
-    success: '&aDu hast die Münzen von %name% auf %coins% gesetzt'
+    success: '&aDu hast die Münzen von %s auf %.3f gesetzt'

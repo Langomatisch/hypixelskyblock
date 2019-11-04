@@ -28,7 +28,7 @@ public class CoinsCommand extends Command {
 
             @Override
             public void onFailure(Throwable throwable) {
-
+                module.getLanguageHandler().sendMessage((Player) commandSender, "command.error", throwable.getMessage());
             }
         });
         return false;
