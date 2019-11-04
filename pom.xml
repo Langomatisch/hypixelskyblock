@@ -25,6 +25,7 @@
         <module>enchantments</module>
         <module>lobby</module>
         <module>language</module>
+        <module>item</module>
     </modules>
 
     <dependencies>
