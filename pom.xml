@@ -13,6 +13,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
+        <spigot.version>1.16.3-R0.1-SNAPSHOT</spigot.version>
     </properties>
 
     <modules>
@@ -21,8 +22,6 @@
         <module>coins</module>
         <module>auctionhouse</module>
         <module>minion</module>
-        <module>hypixel-rank-sync</module>
-        <module>enchantments</module>
         <module>lobby</module>
         <module>language</module>
         <module>item</module>
